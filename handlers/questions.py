@@ -15,7 +15,6 @@ async def ask_question(message: Message):
         await message.answer("У тебя нет активных сессий 😕")
         return
 
-    # MVP: берём первую активную сессию
     session_id = sessions[0]
     partner_id = storage.get_partner(session_id, user_id)
 
