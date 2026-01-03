@@ -2,7 +2,6 @@
 import logging
 
 from aiogram import Router
-# from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 
 from keyboards import questions_kb
@@ -12,10 +11,8 @@ logger = logging.getLogger('beta_tg_bot.handlers.catch_all')
 
 
 @router.message()
-# async def catch_all(message: Message, state: FSMContext) -> None:
 async def catch_all(message: Message) -> None:
     user = message.from_user
-    # current_state = await state.get_state()
 
     logger.info(
         "UNHANDLED_MESSAGE",

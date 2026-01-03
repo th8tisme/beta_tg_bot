@@ -6,23 +6,27 @@ import storage
 router = Router()
 
 
-@router.message(F.text.lower() == 'вопрос')
-async def send_question(message: Message):
+@router.message(F.text == "❓ Задать вопрос")
+async def ask_question(message: Message):
     user_id = message.from_user.id
-    active_sessions = storage.get_user_sessions(user_id)
 
-    if not active_sessions:
-        await message.answer('Нет активных сессий 😕 Сначала выбери собеседника.')
+    sessions = storage.get_user_sessions(user_id)
+    if not sessions:
+        await message.answer("У тебя нет активных сессий 😕")
         return
 
-    # для простоты — берём первую
-    session_id = active_sessions[0]
+    # MVP: берём первую активную сессию
+    session_id = sessions[0]
     partner_id = storage.get_partner(session_id, user_id)
-    q = storage.pick_question(session_id)
 
-    if not q:
-        await message.answer('Вопросы в этой сессии закончились.')
+    question = storage.pick_question(session_id)
+    if not question:
+        await message.answer("Вопросы для этой сессии закончились 🫠")
         return
 
-    await message.bot.send_message(partner_id, f'🤔 Вопрос от собеседника:\n\n{q}')
-    await message.answer('Отправил ✅')
+    await message.bot.send_message(
+        partner_id,
+        f"❓ Вопрос от собеседника:\n\n{question}"
+    )
+
+    await message.answer("Отправил вопрос ✅")
