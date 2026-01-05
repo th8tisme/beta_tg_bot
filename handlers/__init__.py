@@ -1,4 +1,4 @@
-# /beta_tg_bot/handlers/
+# /beta_tg_bot/handlers/__init__.py
 from aiogram import Dispatcher
 
 from . import base, catch_all, questions, confirm

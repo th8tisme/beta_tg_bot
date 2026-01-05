@@ -1,3 +1,4 @@
+# /beta_tg_bot/storage.py
 import json, random, uuid
 from pathlib import Path
 

@@ -1,3 +1,4 @@
+# /beta_tg_bot/state.py
 from aiogram.fsm.state import State, StatesGroup
 
 class SessionStates(StatesGroup):

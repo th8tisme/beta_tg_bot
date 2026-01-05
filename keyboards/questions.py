@@ -1,3 +1,4 @@
+# /beta_tg_bot/keyboards/questions.py
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
 contact_pick_kb = ReplyKeyboardMarkup(
@@ -11,7 +12,7 @@ questions_kb = ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton(text='Показать вопрос')],
         [KeyboardButton(text='Отправить вопрос контакту')],
-        [KeyboardButton(text='Выбрать контакт')],  # 👈 третья кнопка
+        [KeyboardButton(text='Выбрать контакт')],
     ],
     resize_keyboard=True,
     input_field_placeholder='выбирай',

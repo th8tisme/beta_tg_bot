@@ -1,1 +1,1 @@
-# /beta_tg_bot/
+# /beta_tg_bot/__init__.py

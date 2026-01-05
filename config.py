@@ -1,4 +1,4 @@
-# bot_tg/config.py
+# /bot_tg/config.py
 import os
 from dataclasses import dataclass
 
