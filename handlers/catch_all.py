@@ -15,14 +15,14 @@ async def catch_all(message: Message) -> None:
     user = message.from_user
 
     logger.info(
-        "UNHANDLED_MESSAGE",
+        'UNHANDLED_MESSAGE',
         extra={
-            "user_id": user.id if user else None,
-            "username": user.username if user else None,
-            "chat_id": message.chat.id,
-            "message_id": message.message_id,
-            "content_type": message.content_type,
-            "text": message.text,
+            'user_id': user.id if user else None,
+            'username': user.username if user else None,
+            'chat_id': message.chat.id,
+            'message_id': message.message_id,
+            'content_type': message.content_type,
+            'text': message.text,
         }
     )
 

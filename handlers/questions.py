@@ -7,13 +7,13 @@ import storage
 router = Router()
 
 
-@router.message(F.text == "❓ Задать вопрос")
+@router.message(F.text == 'Задать вопрос')
 async def ask_question(message: Message):
     user_id = message.from_user.id
 
     sessions = storage.get_user_sessions(user_id)
     if not sessions:
-        await message.answer("У тебя нет активных сессий 😕")
+        await message.answer('У тебя нет активных сессий 😕')
         return
 
     session_id = sessions[0]
@@ -21,12 +21,11 @@ async def ask_question(message: Message):
 
     question = storage.pick_question(session_id)
     if not question:
-        await message.answer("Вопросы для этой сессии закончились 🫠")
+        await message.answer('Вопросы для этой сессии закончились 🫠')
         return
 
-    await message.bot.send_message(
-        partner_id,
-        f"❓ Вопрос от собеседника:\n\n{question}"
+    await message.answer(
+        question
     )
 
-    await message.answer("Отправил вопрос ✅")
+    await message.answer('Отправил вопрос ✅')

@@ -1,16 +1,14 @@
 from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
-from aiogram.fsm.context import FSMContext
 
 import storage
-from states import SessionStates
 from keyboards import session_kb
 
 router = Router()
 
 
 @router.message(F.user_shared)
-async def handle_user_shared(message: Message, state: FSMContext):
+async def handle_user_shared(message: Message):
     partner_id = message.user_shared.user_id
     initiator_id = message.from_user.id
 
@@ -34,32 +32,29 @@ async def handle_user_shared(message: Message, state: FSMContext):
     )
 
     await message.answer('Ждём подтверждение от собеседника.')
-    await state.set_state(SessionStates.waiting_confirmation)
 
 
-@router.callback_query(F.data.startswith("accept:"))
-async def accept_session(callback: CallbackQuery, state: FSMContext):
-    session_id = callback.data.split(":")[1]
+@router.callback_query(F.data.startswith('accept:'))
+async def accept_session(callback: CallbackQuery):
+    session_id = callback.data.split(':')[1]
     session = storage.confirm_session(session_id)
 
     if not session:
-        await callback.answer("Сессия не найдена", show_alert=True)
+        await callback.answer('Сессия не найдена', show_alert=True)
         return
 
-    initiator_id = session["a"]
+    initiator_id = session['a']
 
     await callback.message.answer(
-        "💬 Сессия активна.\nТеперь можно задавать вопросы 👇",
+        '💬 Сессия активна.\nТеперь можно задавать вопросы 👇',
         reply_markup=session_kb,
     )
 
     await callback.bot.send_message(
         initiator_id,
-        "🔥 Партнёр подтвердил.\nМожешь задавать вопросы 👇",
+        '🔥 Партнёр подтвердил.\nМожешь задавать вопросы 👇',
         reply_markup=session_kb,
     )
-
-    await state.set_state(SessionStates.in_chat)
 
 
 @router.callback_query(F.data.startswith('decline:'))
